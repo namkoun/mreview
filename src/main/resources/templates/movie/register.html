@@ -142,7 +142,7 @@
 
                     $(uploadResultArr).each(function (i,obj){
 
-                        str += "<li data-name'" + obj.fileName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid +"'>";
+                        str += "<li data-name='" + obj.fileName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid +"'>";
                         str += "<div>";
                         str += "<button type='button' data-file=\'" + obj.imageURL + "\' "
                         str += "class='btn-warning btn-sm'>X</button><br>";
@@ -152,6 +152,20 @@
                     })
                     uploadURL.append(str);
                 }
+                $(".btn-primary").on("click",function (e){
+                    e.preventDefault();
+
+                    var str = "";
+
+                    $(".uploadResult li").each(function (i, obj){
+                        var target = $(obj);
+                        str += "<input type='hidden' name='imageDTOList["+i+"].imgName' value='"+target.data('name')+"'>";
+                        str += "<input type='hidden' name='imageDTOList["+i+"].path' value='"+target.data('path')+"'>";
+                        str += "<input type='hidden' name='imageDTOList["+i+"].uuid' value='"+target.data('uuid')+"'>";
+                    })
+                    $(".box").html(str);
+                    $("form").submit();
+                })
             })
         </script>
 

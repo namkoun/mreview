@@ -4,9 +4,12 @@ package oeg.zerock.mreview.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import oeg.zerock.mreview.dto.MovieDTO;
+import oeg.zerock.mreview.dto.PageRequestDTO;
 import oeg.zerock.mreview.service.MovieService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,6 +35,20 @@ public class MovieController {
         redirectAttributes.addFlashAttribute("msg", mno);
 
         return "redirect:/movie/list";
+    }
+
+    @GetMapping("/list")
+    public void list(PageRequestDTO pageResultDTO, Model model){
+        log.info("pageRequestDTO"+ pageResultDTO);
+        model.addAttribute("result", movieService.getList(pageResultDTO));
+
+
+    }
+    @GetMapping({"/read","/modify"})
+    public void read(long mno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model){
+        log.info("mno: "+mno);
+        MovieDTO movieDTO = movieService.getMovie(mno);
+        model.addAttribute("dto", movieDTO);
     }
 
 }
