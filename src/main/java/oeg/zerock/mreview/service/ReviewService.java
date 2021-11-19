@@ -31,5 +31,17 @@ public interface ReviewService {
 
     default ReviewDTO entityToDto(Review movieReview){
 
+        ReviewDTO movieReviewDTO = ReviewDTO.builder()
+                .reviewnum(movieReview.getReviewnum())
+                .mno(movieReview.getMovie().getMno())
+                .mid(movieReview.getMember().getMid())
+                .nickname(movieReview.getMember().getNickname())
+                .email(movieReview.getMember().getEmail())
+                .grade(movieReview.getGrade())
+                .text(movieReview.getText())
+                .regDate(movieReview.getRegData())
+                .modDate(movieReview.getModData())
+                .build();
+        return movieReviewDTO;
     }
 }
