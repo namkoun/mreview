@@ -91,7 +91,7 @@ public class UploadController {
         return folderPath;
     }
     @GetMapping("/display")
-    public ResponseEntity<byte[]> getFile(String fileName){
+    public ResponseEntity<byte[]> getFile(String fileName, String size){
         ResponseEntity<byte[]> result = null;
 
         try {
@@ -99,6 +99,11 @@ public class UploadController {
             log.info("filename: "+srcFileName);
 
             File file = new File(uploadPath +File.separator+ srcFileName);
+
+            if (size != null && size.equals("1")){
+                file = new File(file.getParent(), file.getName().substring(2));
+            }
+
             log.info("file:" + file);
 
             HttpHeaders header = new HttpHeaders();
