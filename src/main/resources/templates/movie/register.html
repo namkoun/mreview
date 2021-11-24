@@ -26,6 +26,14 @@
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
+        <h1>파일 업로드</h1>
+        <form action="fileupload", id="fileForm" method="post" enctype="multipart/form-data">
+            <input type="file", name="uploadfile" placeholder="파일 선택" /><br/>
+            <input type="button" class="onclickupload" value="업로드">
+        </form>
+
+
         <div class="uploadResult">
             <ul>
 
@@ -135,6 +143,26 @@
                             targetLi.remove();
                         }
                     })
+                })
+
+                $(".onclickupload").click(function (){
+                    var formData =new FormData($('#fileForm')[0]);
+                    console.log(formData);
+                    $.ajax({
+                        type: "POST",
+                        enctype: 'multipart/form-data', // 필수
+                        url: '/movie/fileupload' ,
+                        data: formData, // 필수
+                        processData: false, // 필수
+                        contentType: false, // 필수
+                        cache: false,
+                        success: function (result){
+                            console.log(result)
+                            console.log("성공 ")
+
+
+                        }
+                    });
                 })
                 function showResult(uploadResultArr){
                     var uploadURL = $(".uploadResult ul");
